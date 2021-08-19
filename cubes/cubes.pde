@@ -57,13 +57,16 @@ int stop8 = 1;//initialize to a closing state for pin 8
 int stop9 = 1;//initialize to a closing state for pin 9
 int serialValue = -1;//initialize to -1 means no message received from serial
 
+//set the size of the windows
+public void settings() {
+    size(500,500,P3D);
+}
 
 void setup()
 {
     v1win = new v1Window();
     //Display in 3D on the whole screen
     //fullScreen(P3D);
-    size(500,500,P3D);
     surface.setSize(xWidth, yHeight);    //重设窗口大小
     surface.setLocation(70, 70);    //设置窗口位置
     surface.setTitle("Ohhhh!!!!");//设置窗口标题
