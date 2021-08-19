@@ -43,18 +43,19 @@ int xStart = 497;
 int yStart = 287;
 int margin = 70;
 int xWidth = 855;
-int yHeight = 287;
+int yHeight = 435;
 
 void setup()
 {
     //Display in 3D on the whole screen
-    fullScreen(P3D);
-  surface.setSize(500, 500);    //重设窗口大小
+   // fullScreen(P3D);
+  size(500,500,P3D);
+  surface.setSize(xWidth, yHeight);    //重设窗口大小
   surface.setLocation(70, 70);    //设置窗口位置
-  surface.setTitle("Ohhhh!!!!");//设置窗口标题
-  surface.setAlwaysOnTop(true); //设置是否窗口保持置顶
-  surface.setResizable(true);   //设置窗口可变
-  surface.setCursor(HAND);      //设置鼠标样式 ARROW, CROSS, HAND, MOVE, TEXT, WAIT
+  //surface.setTitle("Ohhhh!!!!");//设置窗口标题
+  //surface.setAlwaysOnTop(true); //设置是否窗口保持置顶
+  //surface.setResizable(true);   //设置窗口可变
+  //surface.setCursor(HAND);      //设置鼠标样式 ARROW, CROSS, HAND, MOVE, TEXT, WAIT
     
     //Load the minim library
     minim = new Minim(this);
