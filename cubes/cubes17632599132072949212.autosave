@@ -2,7 +2,7 @@ import ddf.minim.*;
 import ddf.minim.analysis.*;
 import processing.serial.*;
 
-v1Window v1win;
+PWindow win;
 Minim minim;
 AudioPlayer jingle;
 AudioInput input;
@@ -38,35 +38,40 @@ Cube[] cubes;
 int nbMurs = 500;
 Mur[] murs;
 
-// Set up the size of the windows
+// Set up the starting position of the graph
+int xStart = 497;
+int yStart = 287;
+int margin = 70;
 int xWidth = 855;
 int yHeight = 435;
 //get the port values
+//for voice 1
 //AudioIn in;
 // Create object from Serial class
 String val;     // Data received from the serial port
-Serial myPort = new Serial(this, Serial.list()[4], 9600); //set up the port info
-int signal7High = '7'; //the char printout to the serial if pin 7 is HIGH
-int signal7Low = '1';//the char printout to the serial if pin 7 is LOW
-int signal8High = '8';//the char printout to the serial if pin 8 is HIGH
-int signal8Low = '2';//the char printout to the serial if pin 8 is LOW
-int signal9High = '9';//the char printout to the serial if pin 9 is HIGH
-int signal9Low = '3';//the char printout to the serial if pin 9 is LOW
-int stop7 = 1; //initialize to a closing state for pin 7
-int stop8 = 1;//initialize to a closing state for pin 8
-int stop9 = 1;//initialize to a closing state for pin 9
-int serialValue = -1;//initialize to -1 means no message received from serial
-
-
+Serial myPort = new Serial(this, Serial.list()[4], 9600);
+int signal7High = '7';
+int signal7Low = '1';
+int signal8High = '8';
+int signal8Low = '2';
+int signal9High = '9';
+int signal9Low = '3';
+int stop7 = 1;
+int stop8 = 1;
+int stop9 = 1;
+int serialValue = -1;
+public void setsize() {
+  size(320, 240);
+}
 void setup()
 {
-    v1win = new v1Window();
+    win = new PWindow();
     //Display in 3D on the whole screen
     //fullScreen(P3D);
     size(500,500,P3D);
     surface.setSize(xWidth, yHeight);    //重设窗口大小
     surface.setLocation(70, 70);    //设置窗口位置
-    surface.setTitle("Ohhhh!!!!");//设置窗口标题
+    //surface.setTitle("Ohhhh!!!!");//设置窗口标题
     //surface.setAlwaysOnTop(true); //设置是否窗口保持置顶
     //surface.setResizable(true);   //设置窗口可变
     //surface.setCursor(HAND);      //设置鼠标样式 ARROW, CROSS, HAND, MOVE, TEXT, WAIT
@@ -126,7 +131,8 @@ void draw()
         }
     }
     if (serialValue != -1 && stop7 != 1) {
-        // Advance the mic input. We draw() for each "frame" of the input...
+        // Advance the song.We draw() for each "frame" of the song...
+        
         fft.forward(input.mix);
         // Calculation of the"scores"(power) for three categories of sound
         //First, save the old values
