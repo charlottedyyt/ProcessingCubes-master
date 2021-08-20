@@ -40,7 +40,7 @@ class v2Window extends PApplet {
             for (int i = 0; i < HALF_WIDTH; i ++)
             {      
                 stroke(255, 255, 255, 100 + fft.getBand(i));
-                circle(i * width / 1024 * 3, SCREEN_HEIGHT / 2, fft.getBand(i));
+                circle(i * width / 1024 * 3, SCREEN_HEIGHT / 2, fft.getBand(i)*100));
             }
         } 
     }

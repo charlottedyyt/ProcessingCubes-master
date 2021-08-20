@@ -42,8 +42,8 @@ int nbMurs = 500;
 Mur[] murs;
 
 // Set up the size of the windows
-static int SCREEN_WIDTH = 855;
-static int SCREEN_HEIGHT = 435;
+static int SCREEN_WIDTH = 960;
+static int SCREEN_HEIGHT = 540;
 //get the port values
 //AudioIn in;
 // Create object from Serial class
