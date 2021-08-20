@@ -1,10 +1,8 @@
 import ddf.minim.*;
 import ddf.minim.analysis.*;
-import ddf.minim.signals.*;
 import processing.serial.*;
 
 v1Window v1win;
-v2Window v2win;
 Minim minim;
 AudioPlayer jingle;
 AudioInput input;
@@ -41,39 +39,35 @@ int nbMurs = 500;
 Mur[] murs;
 
 // Set up the size of the windows
-static int SCREEN_WIDTH = 855;
-static int SCREEN_HEIGHT = 435;
+int xWidth = 855;
+int yHeight = 435;
 //get the port values
 //AudioIn in;
 // Create object from Serial class
 String val;     // Data received from the serial port
 Serial myPort = new Serial(this, Serial.list()[4], 9600); //set up the port info
-int signal6High = '6'; //the char printout to the serial if pin 7 is HIGH
-int signal6Low = '1';//the char printout to the serial if pin 7 is LOW
 int signal7High = '7'; //the char printout to the serial if pin 7 is HIGH
-int signal7Low = '2';//the char printout to the serial if pin 7 is LOW
+int signal7Low = '1';//the char printout to the serial if pin 7 is LOW
 int signal8High = '8';//the char printout to the serial if pin 8 is HIGH
-int signal8Low = '3';//the char printout to the serial if pin 8 is LOW
+int signal8Low = '2';//the char printout to the serial if pin 8 is LOW
 int signal9High = '9';//the char printout to the serial if pin 9 is HIGH
-int signal9Low = '4';//the char printout to the serial if pin 9 is LOW
+int signal9Low = '3';//the char printout to the serial if pin 9 is LOW
 int stop7 = 1; //initialize to a closing state for pin 7
 int stop8 = 1;//initialize to a closing state for pin 8
 int stop9 = 1;//initialize to a closing state for pin 9
 int serialValue = -1;//initialize to -1 means no message received from serial
 
 //set the size of the windows
-// public void settings() {
-//     size(500,500,P3D);
-// }
+public void settings() {
+    size(500,500,P3D);
+}
 
 void setup()
 {
-    size(500,500,P3D);
     v1win = new v1Window();
-    v2win = new v2Window();
     //Display in 3D on the whole screen
     //fullScreen(P3D);
-    surface.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);    //重设窗口大小
+    surface.setSize(xWidth, yHeight);    //重设窗口大小
     surface.setLocation(70, 70);    //设置窗口位置
     surface.setTitle("Ohhhh!!!!");//设置窗口标题
     //surface.setAlwaysOnTop(true); //设置是否窗口保持置顶
@@ -359,13 +353,3 @@ class Mur {
         }
     } 
 }
-// void keyPressed(){
-//   if ( stop7 != 1){
-//     if ( input.isMuted() ){
-//       input.unmute();
-//     }
-//     else{
-//       input.mute();
-//     }
-//   }
-// }

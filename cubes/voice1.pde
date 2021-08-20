@@ -4,7 +4,7 @@ class v1Window extends PApplet {
         PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, this);
     }  
     void settings() {
-        size(xWidth, yHeight);
+        size(SCREEN_WIDTH, SCREEN_HEIGHT);
     }
     void setup()
     {
@@ -34,16 +34,16 @@ class v1Window extends PApplet {
                 stop8 = 1;
             }
         }
-        float HALF_WIDTH = xWidth/2;
+        float HALF_WIDTH = SCREEN_WIDTH/2;
         if(serialValue != -1 && stop8 != 1)
-            for (int i = 0; i < HALF_WIDTH; i += 10)
+            for (int i = 0; i < HALF_WIDTH; i += 8)
             {      
             int c = floor(map(i, 0, HALF_WIDTH, 100, 220));
             stroke(c);
             fill(0);
-            ellipse(HALF_WIDTH - i, yHeight/2, fft.getBand(i), fft.getBand(i + 10) * 150); 
-            ellipse(HALF_WIDTH + i, yHeight/2, fft.getBand(i), fft.getBand(i + 10) * 150); 
-            println(serialValue); //print it out in the console
+            ellipse(HALF_WIDTH - i, SCREEN_HEIGHT/2, fft.getBand(i), fft.getBand(i + 10) * 150); 
+            ellipse(HALF_WIDTH + i, SCREEN_HEIGHT/2, fft.getBand(i), fft.getBand(i + 10) * 150); 
+            println(serialValue-'0'); //print it out in the console
         } 
     }
 }
