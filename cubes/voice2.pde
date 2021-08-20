@@ -10,7 +10,7 @@ class v2Window extends PApplet {
     {
         //fullScreen();
         noCursor();
-        colorMode(HSB);
+        colorMode(RGB);
         minim = new Minim(this); 
         input = minim.getLineIn(Minim.MONO);  
         fft = new FFT(input.bufferSize(), input.sampleRate());
@@ -29,18 +29,23 @@ class v2Window extends PApplet {
             }
         }
         
-        int HALF_WIDTH = floor(SCREEN_WIDTH/2);
+        int HALF_WIDTH = floor(SCREEN_WIDTH / 2);
         if (serialValue != -1 && stop8 != 1) {
             background(0);
-            fill(0);
-            for (int i = HALF_WIDTH; i > SCREEN_WIDTH; i --){
-                stroke(255, 255, 255, 100 + fft.getBand(i));
-                circle((i-HALF_WIDTH) * width / 1024 * 3, SCREEN_HEIGHT / 2, fft.getBand((i-HALF_WIDTH))*100);
+            //fill(0);
+            for (int i = HALF_WIDTH; i < SCREEN_WIDTH; i +=10) {
+                int c = floor(map(i, 0, HALF_WIDTH, 0, 100));
+                fill(0,0,0,0);
+                stroke(255,255,255,c); 
+                circle(HALF_WIDTH, SCREEN_HEIGHT / 2, fft.getBand(i-HALF_WIDTH) * 100);
             }
-            for (int i = 0; i < HALF_WIDTH; i ++)
+            for (int i = 0; i < HALF_WIDTH; i += 10)
             {      
-                stroke(255, 255, 255, 100 + fft.getBand(i));
-                circle(i * width / 1024 * 3, SCREEN_HEIGHT / 2, fft.getBand(i)*100));
+                fill(0,0,0,0);
+                int c = floor(map(i, 0, HALF_WIDTH, 0, 100));
+                stroke(255,255,255,c); 
+                //stroke(255, 255, 255, 100 + fft.getBand(i));
+                circle(HALF_WIDTH, SCREEN_HEIGHT / 2, fft.getBand(HALF_WIDTH - i) * 100);
             }
         } 
     }
