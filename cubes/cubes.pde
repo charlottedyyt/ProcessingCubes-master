@@ -57,6 +57,7 @@ int signal8High = '8';//the char printout to the serial if pin 8 is HIGH
 int signal8Low = '3';//the char printout to the serial if pin 8 is LOW
 int signal9High = '9';//the char printout to the serial if pin 9 is HIGH
 int signal9Low = '4';//the char printout to the serial if pin 9 is LOW
+int stop6 = 1; //initialize to a closing state for pin 6
 int stop7 = 1; //initialize to a closing state for pin 7
 int stop8 = 1;//initialize to a closing state for pin 8
 int stop9 = 1;//initialize to a closing state for pin 9
