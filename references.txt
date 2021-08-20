@@ -1,0 +1,9 @@
+Example of creating a Processing sketch with multiple windows (works in Processing 3.0)
+https://gist.github.com/atduskgreg/666e46c8408e2a33b09a
+https://processinghub.github.io/BaiAsk/2019/04/17/BaiAsk-vol-006u/
+Processing cubes audio visualisation with Processing 3 (Source code included)
+https://www.youtube.com/watch?v=gHpxRv4MBBA
+https://github.com/samuellapointe/ProcessingCubes
+Audio Visualizer Using Processing
+https://www.youtube.com/watch?v=XS62cBK9E7w
+https://ideone.com/iYhvdW
