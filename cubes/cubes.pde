@@ -5,6 +5,7 @@ import processing.serial.*;
 
 v1Window v1win;
 v2Window v2win;
+v3Window v3win;
 Minim minim;
 AudioPlayer jingle;
 AudioInput input;
@@ -71,6 +72,7 @@ void setup()
     size(500,500,P3D);
     v1win = new v1Window();
     v2win = new v2Window();
+    v3win = new v3Window();
     //Display in 3D on the whole screen
     //fullScreen(P3D);
     surface.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);    //重设窗口大小
@@ -126,15 +128,15 @@ void draw()
     if (myPort.available() > 0) 
     {  // If data is available
         serialValue = myPort.read();
-        if (signal7High == serialValue) {
-            stop7 = 0;
+        if (signal6High == serialValue) {
+            stop6 = 0;
         }
-        else if (signal7Low == serialValue)
+        else if (signal6Low == serialValue)
         {
-            stop7 = 1;
+            stop6 = 1;
         }
     }
-    if (serialValue != -1 && stop7 != 1) {
+    if (serialValue != -1 && stop6 != 1) {
         // Advance the mic input. We draw() for each "frame" of the input...
         fft.forward(input.mix);
         // Calculation of the"scores"(power) for three categories of sound
@@ -236,6 +238,9 @@ void draw()
             float intensity = fft.getBand(i % ((int)(fft.specSize() * specHi)));
             murs[i].display(scoreLow, scoreMid, scoreHi, intensity, scoreGlobal);
         }
+    }
+    else{
+      noStroke();
     }
 }
 // Classfor the cubes which float in space

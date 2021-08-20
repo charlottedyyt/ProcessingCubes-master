@@ -26,16 +26,16 @@ class v1Window extends PApplet {
         if (myPort.available() > 0) 
         {  // If data is available
             serialValue = myPort.read();
-            if(signal8High == serialValue){
-                stop8 = 0;
+            if(signal7High == serialValue){
+                stop7 = 0;
             }
-            else if(signal8Low == serialValue)
+            else if(signal7Low == serialValue)
             {
-                stop8 = 1;
+                stop7 = 1;
             }
         }
         float HALF_WIDTH = SCREEN_WIDTH/2;
-        if(serialValue != -1 && stop8 != 1)
+        if(serialValue != -1 && stop7 != 1)
             for (int i = 0; i < HALF_WIDTH; i += 8)
             {      
             int c = floor(map(i, 0, HALF_WIDTH, 100, 220));
