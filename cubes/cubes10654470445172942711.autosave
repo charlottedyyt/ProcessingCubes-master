@@ -1,11 +1,8 @@
 import ddf.minim.*;
 import ddf.minim.analysis.*;
-import ddf.minim.signals.*;
 import processing.serial.*;
 
 v1Window v1win;
-v2Window v2win;
-v3Window v3win;
 Minim minim;
 AudioPlayer jingle;
 AudioInput input;
@@ -42,41 +39,40 @@ int nbMurs = 500;
 Mur[] murs;
 
 // Set up the size of the windows
-static int SCREEN_WIDTH = 960;
-static int SCREEN_HEIGHT = 510;
+int xWidth = 855;
+int yHeight = 435;
 //get the port values
 //AudioIn in;
 // Create object from Serial class
 String val;     // Data received from the serial port
 Serial myPort = new Serial(this, Serial.list()[4], 9600); //set up the port info
-int signal6High = '6'; //the char printout to the serial if pin 7 is HIGH
-int signal6Low = '1';//the char printout to the serial if pin 7 is LOW
 int signal7High = '7'; //the char printout to the serial if pin 7 is HIGH
-int signal7Low = '2';//the char printout to the serial if pin 7 is LOW
+int signal7Low = '1';//the char printout to the serial if pin 7 is LOW
 int signal8High = '8';//the char printout to the serial if pin 8 is HIGH
-int signal8Low = '3';//the char printout to the serial if pin 8 is LOW
+int signal8Low = '2';//the char printout to the serial if pin 8 is LOW
 int signal9High = '9';//the char printout to the serial if pin 9 is HIGH
-int signal9Low = '4';//the char printout to the serial if pin 9 is LOW
-int stop6 = 1; //initialize to a closing state for pin 6
+int signal9Low = '3';//the char printout to the serial if pin 9 is LOW
 int stop7 = 1; //initialize to a closing state for pin 7
 int stop8 = 1;//initialize to a closing state for pin 8
 int stop9 = 1;//initialize to a closing state for pin 9
 int serialValue = -1;//initialize to -1 means no message received from serial
 
 //set the size of the windows
-// public void settings() {
-//     size(500,500,P3D);
-// }
+public void settings() {
+    size(500,500,P3D);
+}
 
 void setup()
 {
-    size(500,500,P3D);
     v1win = new v1Window();
-    v2win = new v2Window();
-    v3win = new v3Window();
-    surface.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);    //set the size of the window
-    surface.setLocation(0, 0);    //set the position of the window
-    surface.setTitle("Live Platform 1");//Set the title of this window
+    //Display in 3D on the whole screen
+    //fullScreen(P3D);
+    surface.setSize(xWidth, yHeight);    //重设窗口大小
+    surface.setLocation(70, 70);    //设置窗口位置
+    surface.setTitle("Ohhhh!!!!");//设置窗口标题
+    //surface.setAlwaysOnTop(true); //设置是否窗口保持置顶
+    //surface.setResizable(true);   //设置窗口可变
+    //surface.setCursor(HAND);      //设置鼠标样式 ARROW, CROSS, HAND, MOVE, TEXT, WAIT
     
     //Load the minim library
     minim = new Minim(this);
@@ -121,40 +117,18 @@ void setup()
 }
 void draw()
 {
-    
     if (myPort.available() > 0) 
     {  // If data is available
         serialValue = myPort.read();
-        if (signal6High == serialValue) {
-            stop6 = 0;
-        }
-        else if (signal6Low == serialValue)
-        {
-            stop6 = 1;
-        }
         if (signal7High == serialValue) {
             stop7 = 0;
         }
         else if (signal7Low == serialValue)
         {
             stop7 = 1;
-        }        
-        if (signal8High == serialValue) {
-            stop8 = 0;
-        }
-        else if (signal8Low == serialValue)
-        {
-            stop8 = 1;
-        }    
-        if (signal9High == serialValue) {
-            stop9 = 0;
-        }
-        else if (signal9Low == serialValue)
-        {
-            stop9 = 1;
         }
     }
-    if (stop6 != 1) {
+    if (serialValue != -1 && stop7 != 1) {
         // Advance the mic input. We draw() for each "frame" of the input...
         fft.forward(input.mix);
         // Calculation of the"scores"(power) for three categories of sound
@@ -207,6 +181,8 @@ void draw()
             	// Theopacity is determined by the volume of the tape andthe overall volume.
             cubes[i].display(scoreLow, scoreMid, scoreHi, bandValue,scoreGlobal);
         }
+        
+        
         //Line walls, here you have to keepthe valueof the previous strip and the next one to connect them together
         float previousBandValue = fft.getBand(0);
         
@@ -233,16 +209,18 @@ void draw()
             line((previousBandValue * heightMult), 0, dist * (i - 1),(bandValue * heightMult), 0, dist * i);
             line(0,(previousBandValue * heightMult),dist * (i - 1),(bandValue * heightMult), 0, dist * i);
             
-            // lowerright line
+            	// lowerright line
             line(width, height - (previousBandValue * heightMult), dist * (i - 1), width, height - (bandValue * heightMult), dist * i);
             line(width - (previousBandValue * heightMult), height, dist * (i - 1), width - (bandValue * heightMult), height, dist * i);
             line(width, height - (previousBandValue * heightMult), dist * (i - 1), width - (bandValue * heightMult), height, dist * i);
-            // upper right line
+            	// upper right line
+            
             line(width,(previousBandValue * heightMult), dist * (i - 1), width,(bandValue * heightMult), dist * i);
             line(width - (previousBandValue * heightMult), 0, dist * (i - 1), width - (bandValue * heightMult), 0, dist * i);
             line(width,(previousBandValue * heightMult), dist * (i - 1), width - (bandValue * heightMult), 0, dist * i);
-
-            // Save the value for the next loop round
+            
+            
+            	// Save the value for the next loop round
             previousBandValue = bandValue;
             
         }
@@ -253,66 +231,63 @@ void draw()
             murs[i].display(scoreLow, scoreMid, scoreHi, intensity, scoreGlobal);
         }
     }
-    int sig = serialValue-'0';
-    if(sig > 0 && sig < 10)
-      println(sig); //print it out in the console
 }
 // Classfor the cubes which float in space
 class Cube {
-    //Z position of "spawn" and maximum Z position
-    float startingZ = -10000;
-    float maxZ = 1000;
-    //Position values
-    float x, y,z;
-    float rotX,rotY, rotZ;
-    float sumRotX, sumRotY, sumRotZ;
-    //Constructor
-    Cube() {
-        //Make the cube appear at a random location
+  // Z position of "spawn" and maximum Z position
+  float startingZ = -10000;
+  float maxZ = 1000;
+  // Position values
+  float x, y,z;
+  float rotX,rotY, rotZ;
+  float sumRotX, sumRotY, sumRotZ;
+  // Constructor
+  Cube() {
+    //Make the cube appear at a random location
+    x = random(0, width);
+    y = random(0, height);
+    z = random(startingZ, maxZ);
+    //Give the cube a random rotation
+    rotX = random(0, 1);
+    rotY = random(0, 1);
+    rotZ = random(0, 1);
+  }
+  void display(float scoreLow, float scoreMid, float scoreHi, float intensity, float scoreGlobal) {  
+    //Select the color, opacity determined bythe intensity(volume of the band)
+    color displayColor = color(scoreLow * 0.67, scoreMid * 0.67, scoreHi * 0.67, intensity * 5);
+    fill(displayColor, 255);
+    
+    //Line color, they disappear with the individual intensity of the cube
+    color strokeColor = color(255, 150 - (20 * intensity));
+    stroke(strokeColor);
+    strokeWeight(1 + (scoreGlobal / 300));
+    //Create a transformation matrix to perform rotations, enlargements
+    pushMatrix();
+    //Shift
+    translate(x, y, z);
+    //Calculatethe rotation according to theintensity for the cube
+    sumRotX += intensity * (rotX / 1000);
+    sumRotY += intensity * (rotY / 1000);
+    sumRotZ += intensity * (rotZ / 1000);
+    //Apply therotation
+    rotateX(sumRotX);
+    rotateY(sumRotY);
+    rotateZ(sumRotZ);
+    //Creation of the box, variable size according to the intensity for the cube
+    box(100 + (intensity / 2));
+    //Apply thematrix
+    popMatrix();
+    //Zdisplacement
+    z += (1 + (intensity / 5) + (pow((scoreGlobal / 150), 2)));
+    //Replace the box at the back when it is no longer visible
+    if (z >= maxZ) {
         x = random(0, width);
         y = random(0, height);
-        z = random(startingZ, maxZ);
-        //Give the cube a random rotation
-        rotX= random(0, 1);
-        rotY= random(0, 1);
-        rotZ= random(0, 1);
+        z = startingZ;
+    }
+  }
 }
-    void display(float scoreLow, float scoreMid, float scoreHi, float intensity, float scoreGlobal) {  
-        //Select the color, opacity determined bythe intensity(volume of the band)
-        color displayColor = color(scoreLow * 0.67, scoreMid * 0.67, scoreHi * 0.67, intensity * 5);
-        fill(displayColor, 255);
-        
-        //Line color, they disappear with the individual intensity of the cube
-        color strokeColor = color(255, 150 - (20 * intensity));
-        stroke(strokeColor);
-        strokeWeight(1 + (scoreGlobal / 300));
-        //Create a transformation matrix to perform rotations, enlargements
-        pushMatrix();
-        //Shift
-        translate(x, y, z);
-        //Calculatethe rotation according to theintensity for the cube
-        sumRotX += intensity * (rotX / 1000);
-        sumRotY += intensity * (rotY / 1000);
-        sumRotZ += intensity * (rotZ / 1000);
-        //Apply therotation
-        rotateX(sumRotX);
-        rotateY(sumRotY);
-        rotateZ(sumRotZ);
-        //Creation of the box, variable size according to the intensity for the cube
-        box(100 + (intensity / 2));
-        //Apply thematrix
-        popMatrix();
-        //Zdisplacement
-        z +=(1 + (intensity / 5) + (pow((scoreGlobal / 150), 2)));
-        //Replace the box at the back when it is no longer visible
-        if (z >= maxZ) {
-            x = random(0, width);
-            y = random(0, height);
-            z = startingZ;
-        }
-}
-}
-
+            
 // Class to display the lines on the sides
 class Mur {
     //Minimum and maximum position Z
@@ -373,7 +348,7 @@ class Mur {
         popMatrix();
         //Z displacement
         z += (pow((scoreGlobal / 150), 2));
-        if (z >= maxZ) {
+    if (z >= maxZ) {
             z = startingZ; 
         }
     } 

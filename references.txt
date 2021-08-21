@@ -7,3 +7,8 @@ https://github.com/samuellapointe/ProcessingCubes
 Audio Visualizer Using Processing
 https://www.youtube.com/watch?v=XS62cBK9E7w
 https://ideone.com/iYhvdW
+Audio Visualization v.2.0
+https://openprocessing.org/sketch/755396
+Using Processing for Music Visualization
+https://www.generativehut.com/post/using-processing-for-music-visualization
+https://github.com/kassianh/imperative_visualizer/blob/main/draw_all.pde
