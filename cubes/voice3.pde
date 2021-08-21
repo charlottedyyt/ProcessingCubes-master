@@ -20,41 +20,31 @@ class v3Window extends PApplet {
         background(0);
         stroke(255); 
         fft.forward(input.mix);
-        if (myPort.available() > 0) 
-        {  // If data is available
-            serialValue = myPort.read();
-            if (signal9High == serialValue) {
-                stop9 = 0;
-            }
-            else if (signal9Low == serialValue)
-            {
-                stop9 = 1;
-            }
-        }
+
         float HALF_WIDTH = SCREEN_WIDTH / 2;
-        if (serialValue != -1 && stop9 != 1)
-            noStroke();
-        for (int i = 150; i < HALF_WIDTH; i += 4)
+        if (stop9 != 1) {
+            for (int i = 150; i < HALF_WIDTH; i += 4)
             {     
-            int c = floor(map(i, 0, HALF_WIDTH, 100, 220));
-            stroke(c); 
-            float x1 = (HALF_WIDTH - i);
-            float y = SCREEN_HEIGHT / 2;
-            float w = (HALF_WIDTH * 0.5) / HALF_WIDTH;
-            float h = fft.getBand(i) * 200;
-            ellipse(x1, y, w, h);
-        } 
-        for (int i = 150; i < HALF_WIDTH + 300; i += 4)
+                int c = floor(map(i, 0, HALF_WIDTH, 100, 220));
+                stroke(c); 
+                float x1 = (HALF_WIDTH - i);
+                float y = SCREEN_HEIGHT / 2;
+                float w = (HALF_WIDTH * 0.5) / HALF_WIDTH;
+                float h = fft.getBand(i) * 200;
+                ellipse(x1, y, w, h);
+            } 
+            for (int i = 150; i < HALF_WIDTH + 300; i += 4)
             {      
-            int c = floor(map(i, HALF_WIDTH + 300, fft.specSize(), 20, 0));
-            stroke(c,180,125);
-     //         fill(0);
-            float x2 = (HALF_WIDTH + i - 300);
-            float y = SCREEN_HEIGHT / 2;
-            float w = (HALF_WIDTH * 0.5) / HALF_WIDTH;
-            float h = fft.getBand(i) * 250;
-            ellipse(x2, y, w, h);
-        } 
+                int c = floor(map(i, HALF_WIDTH + 300, fft.specSize(), 20, 0));
+                stroke(c,180,125);
+        //         fill(0);
+                float x2 = (HALF_WIDTH + i - 300);
+                float y = SCREEN_HEIGHT / 2;
+                float w = (HALF_WIDTH * 0.5) / HALF_WIDTH;
+                float h = fft.getBand(i) * 250;
+                ellipse(x2, y, w, h);
+            } 
+        }
     }
 }
 

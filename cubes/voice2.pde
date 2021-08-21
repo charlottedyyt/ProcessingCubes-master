@@ -17,27 +17,15 @@ class v2Window extends PApplet {
     }
     void draw()
     {
-        if (myPort.available() > 0) 
-        {  // If data is available
-            serialValue = myPort.read();
-            if (signal8High == serialValue) {
-                stop8 = 0;
-            }
-            else if (signal8Low == serialValue)
-            {
-                stop8 = 1;
-            }
-        }
-        
         int HALF_WIDTH = floor(SCREEN_WIDTH / 2);
-        if (serialValue != -1 && stop8 != 1) {
+        if (stop8 != 1) {
             background(0);
             //fill(0);
-            for (int i = HALF_WIDTH; i < SCREEN_WIDTH; i +=10) {
+            for (int i = HALF_WIDTH; i < SCREEN_WIDTH; i += 10) {
                 int c = floor(map(i, 0, HALF_WIDTH, 0, 100));
                 fill(0,0,0,0);
                 stroke(255,255,255,c); 
-                circle(HALF_WIDTH, SCREEN_HEIGHT / 2, fft.getBand(i-HALF_WIDTH) * 100);
+                circle(HALF_WIDTH, SCREEN_HEIGHT / 2, fft.getBand(i - HALF_WIDTH) * 100);
             }
             for (int i = 0; i < HALF_WIDTH; i += 10)
             {      

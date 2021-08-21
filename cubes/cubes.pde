@@ -126,6 +126,7 @@ void setup()
 }
 void draw()
 {
+    
     if (myPort.available() > 0) 
     {  // If data is available
         serialValue = myPort.read();
@@ -136,8 +137,29 @@ void draw()
         {
             stop6 = 1;
         }
+        if (signal7High == serialValue) {
+            stop7 = 0;
+        }
+        else if (signal7Low == serialValue)
+        {
+            stop7 = 1;
+        }        
+        if (signal8High == serialValue) {
+            stop8 = 0;
+        }
+        else if (signal8Low == serialValue)
+        {
+            stop8 = 1;
+        }    
+        if (signal9High == serialValue) {
+            stop9 = 0;
+        }
+        else if (signal9Low == serialValue)
+        {
+            stop9 = 1;
+        }
     }
-    if (serialValue != -1 && stop6 != 1) {
+    if (stop6 != 1) {
         // Advance the mic input. We draw() for each "frame" of the input...
         fft.forward(input.mix);
         // Calculation of the"scores"(power) for three categories of sound
@@ -240,66 +262,66 @@ void draw()
             murs[i].display(scoreLow, scoreMid, scoreHi, intensity, scoreGlobal);
         }
     }
-    else{
-      noStroke();
-    }
+    int sig = serialValue-'0';
+    if(sig > 0 && sig < 10)
+      println(sig); //print it out in the console
 }
 // Classfor the cubes which float in space
 class Cube {
-  // Z position of "spawn" and maximum Z position
-  float startingZ = -10000;
-  float maxZ = 1000;
-  // Position values
-  float x, y,z;
-  float rotX,rotY, rotZ;
-  float sumRotX, sumRotY, sumRotZ;
-  // Constructor
-  Cube() {
-    //Make the cube appear at a random location
-    x = random(0, width);
-    y = random(0, height);
-    z = random(startingZ, maxZ);
-    //Give the cube a random rotation
-    rotX = random(0, 1);
-    rotY = random(0, 1);
-    rotZ = random(0, 1);
-  }
-  void display(float scoreLow, float scoreMid, float scoreHi, float intensity, float scoreGlobal) {  
-    //Select the color, opacity determined bythe intensity(volume of the band)
-    color displayColor = color(scoreLow * 0.67, scoreMid * 0.67, scoreHi * 0.67, intensity * 5);
-    fill(displayColor, 255);
-    
-    //Line color, they disappear with the individual intensity of the cube
-    color strokeColor = color(255, 150 - (20 * intensity));
-    stroke(strokeColor);
-    strokeWeight(1 + (scoreGlobal / 300));
-    //Create a transformation matrix to perform rotations, enlargements
-    pushMatrix();
-    //Shift
-    translate(x, y, z);
-    //Calculatethe rotation according to theintensity for the cube
-    sumRotX += intensity * (rotX / 1000);
-    sumRotY += intensity * (rotY / 1000);
-    sumRotZ += intensity * (rotZ / 1000);
-    //Apply therotation
-    rotateX(sumRotX);
-    rotateY(sumRotY);
-    rotateZ(sumRotZ);
-    //Creation of the box, variable size according to the intensity for the cube
-    box(100 + (intensity / 2));
-    //Apply thematrix
-    popMatrix();
-    //Zdisplacement
-    z += (1 + (intensity / 5) + (pow((scoreGlobal / 150), 2)));
-    //Replace the box at the back when it is no longer visible
-    if (z >= maxZ) {
+    //Z position of "spawn" and maximum Z position
+    float startingZ = -10000;
+    float maxZ = 1000;
+    //Position values
+    float x, y,z;
+    float rotX,rotY, rotZ;
+    float sumRotX, sumRotY, sumRotZ;
+    //Constructor
+    Cube() {
+        //Make the cube appear at a random location
         x = random(0, width);
         y = random(0, height);
-        z = startingZ;
-    }
-  }
+        z = random(startingZ, maxZ);
+        //Give the cube a random rotation
+        rotX= random(0, 1);
+        rotY= random(0, 1);
+        rotZ= random(0, 1);
 }
-            
+    void display(float scoreLow, float scoreMid, float scoreHi, float intensity, float scoreGlobal) {  
+        //Select the color, opacity determined bythe intensity(volume of the band)
+        color displayColor = color(scoreLow * 0.67, scoreMid * 0.67, scoreHi * 0.67, intensity * 5);
+        fill(displayColor, 255);
+        
+        //Line color, they disappear with the individual intensity of the cube
+        color strokeColor = color(255, 150 - (20 * intensity));
+        stroke(strokeColor);
+        strokeWeight(1 + (scoreGlobal / 300));
+        //Create a transformation matrix to perform rotations, enlargements
+        pushMatrix();
+        //Shift
+        translate(x, y, z);
+        //Calculatethe rotation according to theintensity for the cube
+        sumRotX += intensity * (rotX / 1000);
+        sumRotY += intensity * (rotY / 1000);
+        sumRotZ += intensity * (rotZ / 1000);
+        //Apply therotation
+        rotateX(sumRotX);
+        rotateY(sumRotY);
+        rotateZ(sumRotZ);
+        //Creation of the box, variable size according to the intensity for the cube
+        box(100 + (intensity / 2));
+        //Apply thematrix
+        popMatrix();
+        //Zdisplacement
+        z +=(1 + (intensity / 5) + (pow((scoreGlobal / 150), 2)));
+        //Replace the box at the back when it is no longer visible
+        if (z >= maxZ) {
+            x = random(0, width);
+            y = random(0, height);
+            z = startingZ;
+        }
+}
+}
+
 // Class to display the lines on the sides
 class Mur {
     //Minimum and maximum position Z
@@ -360,7 +382,7 @@ class Mur {
         popMatrix();
         //Z displacement
         z += (pow((scoreGlobal / 150), 2));
-    if (z >= maxZ) {
+        if (z >= maxZ) {
             z = startingZ; 
         }
     } 
