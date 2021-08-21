@@ -74,8 +74,6 @@ void setup()
     v1win = new v1Window();
     v2win = new v2Window();
     v3win = new v3Window();
-    //Display in 3D on the whole screen
-    //fullScreen(P3D);
     surface.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);    //set the size of the window
     surface.setLocation(0, 0);    //set the position of the window
     surface.setTitle("Live Platform 1");//Set the title of this window
@@ -209,8 +207,6 @@ void draw()
             	// Theopacity is determined by the volume of the tape andthe overall volume.
             cubes[i].display(scoreLow, scoreMid, scoreHi, bandValue,scoreGlobal);
         }
-        
-        
         //Line walls, here you have to keepthe valueof the previous strip and the next one to connect them together
         float previousBandValue = fft.getBand(0);
         
@@ -237,18 +233,16 @@ void draw()
             line((previousBandValue * heightMult), 0, dist * (i - 1),(bandValue * heightMult), 0, dist * i);
             line(0,(previousBandValue * heightMult),dist * (i - 1),(bandValue * heightMult), 0, dist * i);
             
-            	// lowerright line
+            // lowerright line
             line(width, height - (previousBandValue * heightMult), dist * (i - 1), width, height - (bandValue * heightMult), dist * i);
             line(width - (previousBandValue * heightMult), height, dist * (i - 1), width - (bandValue * heightMult), height, dist * i);
             line(width, height - (previousBandValue * heightMult), dist * (i - 1), width - (bandValue * heightMult), height, dist * i);
-            	// upper right line
-            
+            // upper right line
             line(width,(previousBandValue * heightMult), dist * (i - 1), width,(bandValue * heightMult), dist * i);
             line(width - (previousBandValue * heightMult), 0, dist * (i - 1), width - (bandValue * heightMult), 0, dist * i);
             line(width,(previousBandValue * heightMult), dist * (i - 1), width - (bandValue * heightMult), 0, dist * i);
-            
-            
-            	// Save the value for the next loop round
+
+            // Save the value for the next loop round
             previousBandValue = bandValue;
             
         }
@@ -384,13 +378,3 @@ class Mur {
         }
     } 
 }
-// void keyPressed(){
-//   if ( stop7 != 1){
-//     if ( input.isMuted() ){
-//       input.unmute();
-//     }
-//     else{
-//       input.mute();
-//     }
-//   }
-// }

@@ -9,7 +9,7 @@ class v1Window extends PApplet {
     void setup()
     {
         surface.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);    //set the size of the window
-        surface.setLocation(SCREEN_WIDTH/2, 0);    //set the position of the window
+        surface.setLocation(SCREEN_WIDTH, 0);    //set the position of the window
         surface.setTitle("Live Platform 2");//Set the title of this window
         noCursor();
         colorMode(HSB);
