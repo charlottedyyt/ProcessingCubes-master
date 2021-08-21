@@ -43,7 +43,7 @@ Mur[] murs;
 
 // Set up the size of the windows
 static int SCREEN_WIDTH = 960;
-static int SCREEN_HEIGHT = 520;
+static int SCREEN_HEIGHT = 510;
 //get the port values
 //AudioIn in;
 // Create object from Serial class
@@ -76,12 +76,9 @@ void setup()
     v3win = new v3Window();
     //Display in 3D on the whole screen
     //fullScreen(P3D);
-    surface.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);    //重设窗口大小
-    surface.setLocation(70, 70);    //设置窗口位置
-    surface.setTitle("Ohhhh!!!!");//设置窗口标题
-    //surface.setAlwaysOnTop(true); //设置是否窗口保持置顶
-    //surface.setResizable(true);   //设置窗口可变
-    //surface.setCursor(HAND);      //设置鼠标样式 ARROW, CROSS, HAND, MOVE, TEXT, WAIT
+    surface.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);    //set the size of the window
+    surface.setLocation(0, 0);    //set the position of the window
+    surface.setTitle("Live Platform 1");//Set the title of this window
     
     //Load the minim library
     minim = new Minim(this);

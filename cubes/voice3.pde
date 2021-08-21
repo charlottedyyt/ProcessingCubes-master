@@ -8,7 +8,9 @@ class v3Window extends PApplet {
     }
     void setup()
     {
-        //fullScreen();
+        surface.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);    //set the size of the window
+        surface.setLocation(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);    //set the position of the window
+        surface.setTitle("Live Platform 1");//Set the title of this window
         noCursor();
         colorMode(HSB);
         minim = new Minim(this); 
@@ -20,7 +22,6 @@ class v3Window extends PApplet {
         background(0);
         stroke(255); 
         fft.forward(input.mix);
-
         float HALF_WIDTH = SCREEN_WIDTH / 2;
         if (stop9 != 1) {
             for (int i = 150; i < HALF_WIDTH; i += 4)
@@ -37,7 +38,7 @@ class v3Window extends PApplet {
             {      
                 int c = floor(map(i, HALF_WIDTH + 300, fft.specSize(), 20, 0));
                 stroke(c,180,125);
-        //         fill(0);
+            //      fill(0);
                 float x2 = (HALF_WIDTH + i - 300);
                 float y = SCREEN_HEIGHT / 2;
                 float w = (HALF_WIDTH * 0.5) / HALF_WIDTH;
