@@ -12,16 +12,18 @@ class v1Window extends PApplet {
         surface.setLocation(SCREEN_WIDTH, 0);    //set the position of the window
         surface.setTitle("Live Platform 2");//Set the title of this window
         noCursor();
-        colorMode(HSB);
-        minim = new Minim(this); 
-        input = minim.getLineIn(Minim.MONO);  
-        fft = new FFT(input.bufferSize(), input.sampleRate());
+        colorMode(HSB);    //Load the minim library
+    minim = new Minim(this);
+    
+    //mic audio
+    audio = minim.loadFile(source);
+        fft = new FFT(audio.bufferSize(), audio.sampleRate());
     }
     void draw()
     {
         background(0);
         stroke(255); 
-        fft.forward(input.mix);
+        fft.forward(audio.mix);
         //512 values below --> this loop is called 25 times per second
         //try getting the highest value and making a shape based on that value
         //maybe change color based on the size of the value?

@@ -12,16 +12,14 @@ class v3Window extends PApplet {
         surface.setLocation(SCREEN_WIDTH, SCREEN_HEIGHT);    //set the position of the window
         surface.setTitle("Live Platform 1");//Set the title of this window
         noCursor();
-        colorMode(HSB);
-        minim = new Minim(this); 
-        input = minim.getLineIn(Minim.MONO);  
-        fft = new FFT(input.bufferSize(), input.sampleRate());
+        colorMode(HSB);    
+        fft = new FFT(audio.bufferSize(), audio.sampleRate());
     }
     void draw()
     {
         background(0);
         stroke(255); 
-        fft.forward(input.mix);
+        fft.forward(audio.mix);
         float HALF_WIDTH = SCREEN_WIDTH / 2;
         if (stop9 != 1) {
             for (int i = 150; i < HALF_WIDTH; i += 4)
@@ -48,4 +46,3 @@ class v3Window extends PApplet {
         }
     }
 }
-

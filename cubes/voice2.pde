@@ -13,10 +13,8 @@ class v2Window extends PApplet {
         surface.setLocation(0, SCREEN_HEIGHT);    //set the position of the window
         surface.setTitle("Live Platform 3");//Set the title of this window
         noCursor();
-        colorMode(RGB);
-        minim = new Minim(this); 
-        input = minim.getLineIn(Minim.MONO);  
-        fft = new FFT(input.bufferSize(), input.sampleRate());
+        colorMode(RGB);    
+        fft = new FFT(audio.bufferSize(), audio.sampleRate());
     }
     void draw()
     {
@@ -42,4 +40,3 @@ class v2Window extends PApplet {
         } 
     }
 }
-
